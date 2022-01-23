@@ -1,31 +1,38 @@
 import React ,{ useState }from 'react';
-import Button from '../UI/Button';
+import { Button, Modal, ModalBody } from 'reactstrap';
+
+
 const RemoveUser = () => {
 
     const[enteredid, setenteredid] = useState('');
+    const [modal, setModal]= useState(false);
 
-    const removeuserhandler = (event) =>{
-        event.preventDefault();     
-        setenteredid('');
-    };
     const idChangeHandler = (event) => {
         setenteredid(event.target.value);
 
     };
+
+    const addUserHandler = (event) =>{
+        event.preventDefault();
+       
+        };
+        
+        
+    function toggle() {
+        setModal(!modal)
+      }
 return (
    
     <div className="col-sm-4">
-        <form onSubmit={removeuserhandler}className="form-horizontal">
-        <div className="form-group">
+     <Button color="danger" onClick={toggle}>RemoveUser</Button>
+     <Modal isOpen={modal} toggle={toggle}>
+     <ModalBody>
         <label htmlFor="UserID">User ID</label>
-            <input type="text" value={enteredid}  onChange={idChangeHandler}  />
-            <Button type="submit" className="col-xs-12 col-sm-6 col-md-8">RemoveUser</Button>
-            </div>
-        </form>
-        </div>
-    
-        
-
+            <input type="text" value={enteredid}  onChange={idChangeHandler}  />           
+            <button onClick={addUserHandler}> Click Me</button>
+    </ModalBody>
+    </Modal>
+    </div>
 );
 }
 

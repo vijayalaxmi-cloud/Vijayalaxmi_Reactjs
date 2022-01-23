@@ -1,26 +1,16 @@
 import React ,{ useState }from 'react';
 import classes from './AddUser.module.css';
-import Button from '../UI/Button';
+import { Button, Modal, ModalBody } from 'reactstrap';
 
 
-const AddUser = props => {
+
+const AddUser = (props) => {
     
-
-    const[enteredname, setenteredname] = useState('');
-    const[enteredemail, setenteredemail] = useState('');
-    const[enteredaddress, setenteredaddress] = useState('');
-    const[enteredjoiningdate, setenteredjoiningdate] = useState('');
-
-    const addUserHandler = (event) =>{
-        event.preventDefault();
-        //props.onAddUser(enteredname,enteredemail,enteredaddress,enteredjoiningdate);
-        console.log(enteredname,enteredemail,enteredaddress,enteredjoiningdate);
-        console.log('You clicked submit.');
-        setenteredname('');
-        setenteredemail('');
-        setenteredaddress('');
-        setenteredjoiningdate('');
-    };
+    const[name, setenteredname] = useState('');
+    const[email, setenteredemail] = useState('');
+    const[address, setenteredaddress] = useState('');
+    const[joiningdate, setenteredjoiningdate] = useState('');
+    const [modal, setModal]= useState(false);
 
     const nameChangeHandler = (event) => {
         setenteredname(event.target.value);
@@ -38,34 +28,60 @@ const AddUser = props => {
         setenteredjoiningdate(event.target.value);
 
     };
+    const addUserHandler = (event) =>{
+        event.preventDefault();
+        const val = {
+            name,
+            email,
+            address,
+            joiningdate
+          };
+           console.log(val);      
+          props.func(val);
+          clearState();
+        };
+        const clearState = () => {
+            setenteredname('');
+            setenteredemail('');
+            setenteredaddress('');
+            setenteredjoiningdate('');
+          };
+
+    function toggle() {
+        setModal(!modal)
+      }
 return (
     <div className={classes.input}>
-    <form onSubmit={addUserHandler}>
+      <Button color="danger" onClick={toggle} type="submit">Add User</Button>
+      <Modal isOpen={modal} toggle={toggle}>
+        <ModalBody>
         <label htmlFor="name">Name</label>
         <input id="name" 
         type="text"
-        value={enteredname} 
+        value={name} 
         onChange={nameChangeHandler}          
         /><br></br>
         <label htmlFor="email">Email</label>
         <input id="email" 
           type="email" 
-          value={enteredemail} 
+          value={email} 
           onChange={emailChangeHandler}            
           /><br></br>
         <label htmlFor="address">Address</label>
         <input id="address" type="text" 
-          value={enteredaddress} 
+          value={address} 
           onChange={addressChangeHandler}
           /><br></br>
         <label htmlFor="joiningdate">Joining Date</label>
         <input id="joiningdate" type="date" 
-          value={enteredjoiningdate}
+          value={joiningdate}
           onChange={joiningdateChangeHandler}
           /><br></br>
           <div className="col-md-4 form-group text-center">
-        <Button type="submit">Add User</Button></div>
-    </form>
+        <Button onClick={addUserHandler}>Click Me</Button></div>
+        </ModalBody>
+      </Modal>
+   
     </div>
    
 )
