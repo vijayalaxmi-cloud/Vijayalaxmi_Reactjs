@@ -12,7 +12,7 @@ const HomePage = () => {
         <td>{info.userId}</td>
         <td>{info.name}</td>
         <td>{info.email}</td>
-        <td>{info.Address}</td>
+        <td>{info.address}</td>
         <td>{info.joiningdate}</td>
       </tr>
     );
